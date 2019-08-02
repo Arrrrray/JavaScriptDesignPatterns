@@ -39,4 +39,4 @@ let PriceStrategy = function () {
 
 // 使用
 let price = PriceStrategy('percent50', '350');
-console.log(price);
+console.log('打折之后的价格为：', price);

@@ -11,10 +11,10 @@ const A = {
   },
   // 设置元素的属性
   attr(id, key, value) {
-    document.getElementBuId(id)[key] = value;
+    document.getElementById(id)[key] = value;
   },
   html(id, html) {
-    document.getElementBuId(id).innerHTML = html;
+    document.getElementById(id).innerHTML = html;
   },
   on(id, type, fn) {
     document.getElementById(id)['on' + type] = fn;

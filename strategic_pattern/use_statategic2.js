@@ -5,19 +5,15 @@
 // 策略模式中的代码可以复用。
 
 // 表单验证
-let InputStrategy = function () {
+const InputStrategy = (function () {
   let strategy = {
-    // 是否为空
-    notNull(value) {
-      return /\s+/.test(value) ? '请输入内容' : '';
-    },
     // 是否为一个数字
     number(value) {
-      return /^[0-9]+(\.[0-9]+)?$/.test(value) ? '' : '请输入数字';
+      return /^[0-9]+(\.[0-9]+)?$/.test(value) ? '校验通过' : '校验不通过：请输入数字';
     },
-    // 是否是本地电话
+    // 是否是手机号
     phone(value) {
-      return /^\d{3}\-\d{8}$|^\d{4}\-\d{8}$/.test(value) ? '' : '请输入正确的电话号码';
+      return /^1\d{10}$/.test(value) ? '校验通过' : '校验不通过：请输入正确的手机号码';
     },
   };
 
@@ -33,22 +29,12 @@ let InputStrategy = function () {
       strategy[type] = fn;
     },
   };
-};
+})();
 
 // 拓展 可以延伸算法
 InputStrategy.addStrategy('nickname', function (value) {
-  return /^[a-zA-Z]\w{3,7}$/.test(value) ? '' : '请输入一个4-8位昵称';
+  return /^[a-zA-Z]\w{3,7}$/.test(value) ? '校验通过' : '校验不通过：请输入一个4-8位昵称';
 });
-
-// 外观模式简化元素的获取
-function $tag(tag, context) {
-  context = context || document;
-  return context.getElementByTagName(tag);
-}
-
-// 提交按钮点击
-$tag('input')[1].onclick = function () {
-  let value = $tag('input')[0].value;
-  // 获取昵称验证结果
-  $tag('span')[0].innerHTML = InputStrategy.check('nickname', value);
-};
+console.log('校验昵称:', InputStrategy.check('nickname', 'value'))
+console.log('校验是否是数字:', InputStrategy.check('number', 'aaaa'))
+console.log('校验是否是手机号:', InputStrategy.check('phone', '13112345678'))
