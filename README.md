@@ -711,22 +711,25 @@ teacher.ask('简述观察者模式');
 
 ```
 // 不使用代理的预加载图片函数如下
-var myImage = (function(){
-    var imgNode = document.createElement("img");
-    document.body.appendChild(imgNode);
-    var img = new Image();
-    img.onload = function(){
-        imgNode.src = this.src;
-    };
-    return {
-        setSrc: function(src) {
-            imgNode.src = "http://img.lanrentuku.com/img/allimg/1212/5-121204193Q9-50.gif";
-            img.src = src;
-        }
-    }
+var myImage = (function () {
+  var imgNode = document.createElement("img");
+  document.body.appendChild(imgNode);
+  var img = new Image();
+  img.onload = function () {
+    imgNode.src = this.src;
+    imgNode.style.width = '1000px';
+  };
+  return {
+    setSrc: function (src) {
+      imgNode.src = 'http://image.sowm.cn/j2AFzy.jpg';
+      img.src = src;
+    }
+  }
 })();
+
 // 调用方式
-myImage.setSrc("https://img.alicdn.com/tps/i4/TB1b_neLXXXXXcoXFXXc8PZ9XXX-130-200.png");
+myImage.setSrc("http://m.jusfoun.com/JusfounBackground/vendor/umeditor/net/upload/2016-06-01/c0c374d8-7337-4e17-940d-8813de52ba8b.jpg");
+
 ```
 
 如上代码是不使用代理模式来实现的代码；
@@ -734,30 +737,33 @@ myImage.setSrc("https://img.alicdn.com/tps/i4/TB1b_neLXXXXXcoXFXXc8PZ9XXX-130-20
 第二种方案：使用代理模式来编写预加载图片的代码如下：
 
 ```
-var myImage = (function(){
-    var imgNode = document.createElement("img");
-    document.body.appendChild(imgNode);
-    return {
-        setSrc: function(src) {
-            imgNode.src = src;
-        }
-    }
+// 使用代理模式来编写预加载图片的代码如下：
+var myImage = (function () {
+  var imgNode = document.createElement("img");
+  document.body.appendChild(imgNode);
+  return {
+    setSrc: function (src) {
+      imgNode.src = src;
+      imgNode.style.width = '1000px';
+    }
+  }
 })();
 // 代理模式
-var ProxyImage = (function(){
-    var img = new Image();
-    img.onload = function(){
-        myImage.setSrc(this.src);
-    };
-    return {
-        setSrc: function(src) {
-                         myImage.setSrc("http://img.lanrentuku.com/img/allimg/1212/5-121204193Q9-50.gif");
-        img.src = src;
-        }
-    }
+var ProxyImage = (function () {
+  var img = new Image();
+  img.onload = function () {
+    myImage.setSrc(this.src);
+  };
+  return {
+    setSrc: function (src) {
+      myImage.setSrc('http://image.sowm.cn/j2AFzy.jpg');
+      img.src = src;
+    }
+  }
 })();
 // 调用方式
-ProxyImage.setSrc("https://img.alicdn.com/tps/i4/TB1b_neLXXXXXcoXFXXc8PZ9XXX-130-200.png");
+ProxyImage.setSrc("http://m.jusfoun.com/JusfounBackground/vendor/umeditor/net/upload/2016-06-01/c0c374d8-7337-4e17-940d-8813de52ba8b.jpg");
+
 ```
 
 第一种方案是使用一般的编码方式实现图片的预加载技术，首先创建imgNode元素，然后调用myImage.setSrc该方法的时候，先给图片一个预加载图片，当图片加载完的时候，再给img元素赋值，第二种方案是使用代理模式来实现的，myImage 函数只负责创建img元素，代理函数ProxyImage 负责给图片设置loading图片，当图片真正加载完后的话，调用myImage中的myImage.setSrc方法设置图片的路径；他们之间的优缺点如下：
