@@ -1,3 +1,12 @@
+/*
+ * @Author: junchao
+ * @Date: 2019-08-01 17:33:50
+ * @LastEditTime: 2020-10-15 15:46:33
+ * @LastEditors: junchao
+ * @Description: 
+ * @FilePath: /JavaScriptDesignPatterns/strategic_pattern/use_statategic2.js
+ * @可以输入预定的版权声明、个性签名、空行等
+ */
 // 使用策略模式进行表单验证
 
 // 策略模式利用组合，委托等技术和思想，有效的避免很多if条件语句。
