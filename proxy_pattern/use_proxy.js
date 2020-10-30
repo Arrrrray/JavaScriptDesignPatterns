@@ -1,3 +1,12 @@
+/*
+ * @Author: junchao
+ * @Date: 2019-07-31 17:17:30
+ * @LastEditTime: 2020-10-29 15:58:03
+ * @LastEditors: junchao
+ * @Description: 
+ * @FilePath: /JavaScriptDesignPatterns/proxy_pattern/use_proxy.js
+ * @symbol_custom_string_obkoro1: 可以输入预定的版权声明、个性签名、空行等
+ */
 // 使用代理模式来编写预加载图片的代码如下：
 var myImage = (function () {
   var imgNode = document.createElement("img");
