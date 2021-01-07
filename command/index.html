@@ -1,0 +1,90 @@
+<!--
+ * @Author: junchao
+ * @Date: 2021-01-07 13:42:08
+ * @LastEditTime: 2021-01-07 13:51:11
+ * @LastEditors: junchao
+ * @Description: 
+ * @FilePath: /JavaScriptDesignPatterns/command/index.html
+ * @可以输入预定的版权声明、个性签名、空行等
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>命令模式例子——菜单命令</title>
+</head>
+
+<body>
+  <button class="ref">刷新菜单</button>
+  <button class="add">添加子菜单</button>
+  <button class="del">删除子菜单</button>
+</body>
+<script>
+  //菜单对象
+  var Menu = {
+    refresh: function () {
+      console.log("刷新菜单");
+    }
+  };
+
+  //子菜单
+  var SubMenu = {
+    add: function () {
+      console.log('增加子菜单');
+    },
+
+    del: function () {
+      console.log('删除子菜单');
+    }
+  };
+
+  //封装刷新菜单命令
+  var refreshMenuCommand = function (receiver) {
+    this.receiver = receiver;
+  }
+
+  refreshMenuCommand.prototype.execute = function () {
+    this.receiver.refresh();
+  }
+
+  //封装添加子菜单命令
+  var addSubMenuCommand = function (receiver) {
+    this.receiver = receiver;
+  }
+
+  addSubMenuCommand.prototype.execute = function () {
+    this.receiver.add();
+  }
+
+  //封装删除子菜单命令
+  var delSubMenuCommand = function (receiver) {
+    this.receiver = receiver;
+  }
+
+  delSubMenuCommand.prototype.execute = function () {
+    this.receiver.del();
+  }
+
+  //设置命令函数
+  function setCommand(btn, command) {
+    btn.addEventListener("click", function () {
+      command.execute();
+    })
+  };
+
+  //client客户调用
+  var refreshCommand = new refreshMenuCommand(Menu);
+  var addCommand = new addSubMenuCommand(SubMenu);
+  var delCommand = new delSubMenuCommand(SubMenu);
+
+  var btn = document.querySelectorAll("button");
+
+  setCommand(btn[0], refreshCommand);
+  setCommand(btn[1], addCommand);
+  setCommand(btn[2], delCommand);
+</script>
+
+</html>

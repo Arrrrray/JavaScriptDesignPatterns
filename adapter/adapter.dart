@@ -1,7 +1,7 @@
 /*
  * @Author: junchao
  * @Date: 2020-12-10 16:17:54
- * @LastEditTime: 2020-12-10 16:39:01
+ * @LastEditTime: 2020-12-10 16:52:16
  * @LastEditors: junchao
  * @Description: 
  * @FilePath: /JavaScriptDesignPatterns/adapter/adapter.dart

@@ -1,0 +1,97 @@
+<!--
+ * @Author: junchao
+ * @Date: 2021-01-07 13:46:06
+ * @LastEditTime: 2021-01-07 13:46:59
+ * @LastEditors: junchao
+ * @Description: 
+ * @FilePath: /JavaScriptDesignPatterns/command/index2.html
+ * @可以输入预定的版权声明、个性签名、空行等
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>撤销操作的实例</title>
+  <style>
+    .demo {
+      width: 100%;
+      height: 100px;
+      position: relative;
+    }
+
+    .target {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="demo">
+    <button class="move">移动</button>
+    <button class="undo">撤销</button>
+    <div class="target" style="left:0"></div>
+  </div>
+</body>
+<script>
+  //移动对象
+  var Animate = function (dom) {
+    this.dom = dom;
+    var self = this;
+
+    //移动函数
+    this.move = function () {
+      var left = parseInt(self.dom.style.left);
+      self.dom.style.left = left + 10 + 'px';
+    };
+
+    //取消移动函数
+    this.undo = function () {
+      var left = parseInt(self.dom.style.left);
+      self.dom.style.left = left - 10 + 'px';
+    };
+  };
+
+  //命令对象
+  var Command = function (receiver) {
+    var self = this;
+
+    this.receiver = receiver;
+    this.count = 0;  //记录执行命令的次数
+
+
+    //执行命令
+    this.execute = function () {
+      self.receiver.move();
+      self.count += 1;
+    };
+
+    //撤销命令
+    this.unexecute = function () {
+      if (self.count === 0) return;
+      self.receiver.undo();
+      self.count -= 1;
+    }
+  };
+
+  //设置命令函数
+  function addEvent(dom, fn, Capture) {
+    dom.addEventListener("click", fn, !!Capture);
+  };
+  //client调用
+  var dom = document.querySelector(".target");
+  var moveBtn = document.querySelector(".move");
+  var unmoveBtn = document.querySelector(".undo");
+  var m = new Animate(dom);
+  var c = new Command(m);
+
+  addEvent(moveBtn, c.execute);
+  addEvent(unmoveBtn, c.unexecute);
+</script>
+
+</html>
